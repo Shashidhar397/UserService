@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0.27
+    container_name: mysql-container
+    ports:
+      - "3306:3306"
+    environment:
+      DATABASE_HOST: accounts-mysql
+      DATABASE_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: accounts
+      MYSQL_USER: shashi
+      MYSQL_PASSWORD: Root@123
+    networks:
+      - userservice
+  # Spring Boot Application
+  user-service-app:
+    image: userservice:latest
+    container_name: user-service-container
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./src/main/resources/application.properties
+    depends_on:
+      - db
+    networks:
+      - userservice
+
+networks:
+  userservice:
+    name: userservice
+    external: true
+
+
