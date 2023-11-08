@@ -20,13 +20,12 @@ public class User {
     private String id;
 
     private String name;
+    private String email;
+    private String password;
 
-    @Column(name = "contact_number")
-    private String contactNumber;
-
-
-    public User(String name, String contactNumber) {
+    public User(String name, String email, String password) {
         this.name = name;
-        this.contactNumber = contactNumber;
+        this.email = email;
+        this.password = password;
     }
 }
