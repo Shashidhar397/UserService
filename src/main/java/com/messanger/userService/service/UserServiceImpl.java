@@ -25,13 +25,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserResponseModel login(LoginRequestModel loginRequestModel) {
-        User user = this.userRepository.findUserByEmailAndPassword(loginRequestModel.getUserName(), loginRequestModel.getPassword());
-        return UserResponseModel.getUserResponseModel(user);
+        User user = this.userRepository.findUserByEmailAndPassword(loginRequestModel.getEmail(), loginRequestModel.getPassword());
+        return user != null ? UserResponseModel.getUserResponseModel(user) : null;
     }
 
     @Override
     public SearchUserResponseModel searchUser(String email) {
         User user = this.userRepository.findUserByEmail(email);
-        return user != null ? new SearchUserResponseModel(user.getName(), user.getEmail(), user.getId()) : null;
+        return user != null ? new SearchUserResponseModel(user.getName(), user.getEmail(), user.getUuid()) : null;
     }
 }

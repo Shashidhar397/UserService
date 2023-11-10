@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.UUID;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -14,18 +16,21 @@ import org.hibernate.annotations.GenericGenerator;
 public class User {
 
     @Id
-    @Column(length = 30)
-    @GeneratedValue(generator = "myStringGenerator")
-    @GenericGenerator(name = "myStringGenerator", strategy = "com.messanger.userService.utils.StringIdentifierGenerator")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
+    @Column(length = 50, unique = true)
     private String email;
     private String password;
+
+    @Column(length = 50, unique = true)
+    private String uuid;
 
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.uuid = UUID.randomUUID().toString();
     }
 }

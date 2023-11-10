@@ -12,9 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SearchUserResponseModel {
 
-    @JsonProperty("user_name")
     private String userName;
     private String email;
-    @JsonProperty("user_id")
-    private String userId;
+    private String uuid;
 }

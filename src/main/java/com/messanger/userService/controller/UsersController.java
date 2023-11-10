@@ -22,7 +22,7 @@ public class UsersController {
     @PostMapping(value = "/signUp", consumes = "application/json", produces = "application/json")
     public ResponseEntity<UserResponseModel> registerUser(@RequestBody CreateUserRequestModel createUserRequestModel) {
         UserResponseModel userResponseModel = userService.saveUserDetails(createUserRequestModel);
-        System.out.println(userResponseModel.getUserId());
+        System.out.println(userResponseModel.getUuid());
         ResponseEntity<UserResponseModel> userResponseModelResponseEntity = new ResponseEntity<>(userResponseModel,HttpStatus.OK);
         return userResponseModelResponseEntity;
     }
@@ -30,9 +30,7 @@ public class UsersController {
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<UserResponseModel> login(@RequestBody LoginRequestModel loginRequestModel) {
         UserResponseModel userResponseModel = userService.login(loginRequestModel);
-        System.out.println(userResponseModel.getUserId());
-        ResponseEntity<UserResponseModel> userResponseModelResponseEntity = new ResponseEntity<>(userResponseModel,HttpStatus.OK);
-        return userResponseModelResponseEntity;
+        return userResponseModel != null ? new ResponseEntity<>(userResponseModel,HttpStatus.OK) : new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping(value = "/searchUser", produces = "application/json")

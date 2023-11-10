@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserResponseModel {
 
-    private String userId;
+    private String uuid;
     private String userName;
     private String email;
 
     public static UserResponseModel getUserResponseModel(User user) {
-        return new UserResponseModel(user.getId(), user.getName(), user.getEmail());
+        return new UserResponseModel(user.getUuid(), user.getName(), user.getEmail());
     }
 }
