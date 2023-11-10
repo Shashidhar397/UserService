@@ -6,22 +6,21 @@ import com.messanger.userService.models.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequestModel {
+public class CreateUserRequestModel {
 
-    private String name;
-
-    @JsonProperty("contact_number")
-    @NonNull
-    private String contactNumber;
+    private String userName;
+    private String email;
+    private String password;
+    @JsonProperty("confirm_password")
+    private String confirmPassword;
 
     public User getUserEntity() {
-        User user = new User(this.getName(), this.getContactNumber());
+        User user = new User(this.getUserName(), this.getEmail(), this.getPassword());
         return user;
     }
 

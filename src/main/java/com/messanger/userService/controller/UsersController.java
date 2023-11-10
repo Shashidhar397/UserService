@@ -1,34 +1,43 @@
 package com.messanger.userService.controller;
 
-import com.messanger.userService.models.request.UserRequestModel;
+import com.messanger.userService.models.request.CreateUserRequestModel;
+import com.messanger.userService.models.request.LoginRequestModel;
+import com.messanger.userService.models.response.SearchUserResponseModel;
 import com.messanger.userService.models.response.UserResponseModel;
 import com.messanger.userService.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UsersController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserResponseModel> registerUser(@RequestBody UserRequestModel userRequestModel) {
-        UserResponseModel userResponseModel = userService.saveUserDetails(userRequestModel);
-        System.out.println(userResponseModel.getUserId());
+    @PostMapping(value = "/signUp", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<UserResponseModel> registerUser(@RequestBody CreateUserRequestModel createUserRequestModel) {
+        UserResponseModel userResponseModel = userService.saveUserDetails(createUserRequestModel);
+        System.out.println(userResponseModel.getUuid());
         ResponseEntity<UserResponseModel> userResponseModelResponseEntity = new ResponseEntity<>(userResponseModel,HttpStatus.OK);
         return userResponseModelResponseEntity;
     }
 
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserResponseModel> login(@RequestBody UserRequestModel userRequestModel) {
-        UserResponseModel userResponseModel = userService.getUser(userRequestModel);
-        System.out.println(userResponseModel.getUserId());
-        ResponseEntity<UserResponseModel> userResponseModelResponseEntity = new ResponseEntity<>(userResponseModel,HttpStatus.OK);
-        return userResponseModelResponseEntity;
+    public ResponseEntity<UserResponseModel> login(@RequestBody LoginRequestModel loginRequestModel) {
+        UserResponseModel userResponseModel = userService.login(loginRequestModel);
+        return userResponseModel != null ? new ResponseEntity<>(userResponseModel,HttpStatus.OK) : new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping(value = "/searchUser", produces = "application/json")
+    public ResponseEntity<SearchUserResponseModel> searchUser(@Param("email") String email) {
+        SearchUserResponseModel searchUserResponseModel = userService.searchUser(email);
+        ResponseEntity<SearchUserResponseModel> searchUserResponseModelResponseEntity = new ResponseEntity<>(searchUserResponseModel,HttpStatus.OK);
+        return searchUserResponseModelResponseEntity;
     }
 
 
