@@ -11,6 +11,6 @@ public interface UserService {
 
     public UserResponseModel login(LoginRequestModel loginRequestModel);
 
-    public SearchUserResponseModel searchUser(String email);
+    public SearchUserResponseModel searchUser(String searchTerm);
 
 }

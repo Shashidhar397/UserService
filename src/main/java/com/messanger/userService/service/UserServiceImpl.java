@@ -5,6 +5,7 @@ import com.messanger.userService.models.request.CreateUserRequestModel;
 import com.messanger.userService.models.request.LoginRequestModel;
 import com.messanger.userService.models.response.SearchUserResponseModel;
 import com.messanger.userService.models.response.UserResponseModel;
+import com.messanger.userService.repository.ESUserRepository;
 import com.messanger.userService.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
