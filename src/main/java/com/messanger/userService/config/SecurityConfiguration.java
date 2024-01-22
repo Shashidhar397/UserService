@@ -18,11 +18,14 @@ public class SecurityConfiguration {
     @Value("${cors.corsConfiguration}")
     private String corsConfiguration;
 
+    @Value("${cors.allowedOrigins}")
+    private String allowedOrigins;
+
     @Bean
     public WebMvcConfigurer corsConfigurer(){
         return new WebMvcConfigurer(){
             public void addCorsMappings(final CorsRegistry registry){
-                registry.addMapping(corsConfiguration).allowedHeaders(allowedHeaders).allowedMethods(allowedMethods);
+                registry.addMapping(corsConfiguration).allowedHeaders(allowedHeaders).allowedMethods(allowedMethods).allowedOriginPatterns(allowedOrigins);
             }
         };
     }
